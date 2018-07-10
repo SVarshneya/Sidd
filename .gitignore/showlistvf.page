@@ -1,0 +1,39 @@
+<apex:page controller="SFObjectsList">
+    
+    <apex:form >
+    	<apex:selectList value="{!selectedObj}" size="1">
+            
+            <apex:selectOptions value="{!lstObjects}"></apex:selectOptions>
+            <apex:actionSupport event="onchange" action="{!showFields}" reRender="dt"/>
+        </apex:selectList>
+        
+        <apex:dataTable id="dt" value="{!lstFields}" var="fld">
+            <apex:column >
+                <apex:inputCheckbox value="{!fld.selected}" />
+            </apex:column>
+            <apex:column >
+                <apex:outputText value="{!fld.fieldName}"></apex:outputText>
+            </apex:column>
+            <apex:column >
+                <apex:outputText value="{!fld.dataType}"></apex:outputText>
+            </apex:column>
+        </apex:dataTable>
+        
+        <apex:commandButton value="query" id="btn" action="{!queryResult}" reRender="pnl"/>
+        <br/>
+        <apex:outputPanel id="pnl">
+            <table>
+                <tr>
+            <apex:repeat value="{!mapRes}" var="key">
+                <td>
+                    {!key}<br/>
+                <apex:repeat value="{!mapRes[key]}" var="ele">
+                    {!ele} <br/>
+                </apex:repeat>
+                </td>
+            </apex:repeat>
+                    </tr>
+            </table>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>
